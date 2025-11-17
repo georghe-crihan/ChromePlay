@@ -70,3 +70,13 @@ Notes
 - You can change default AppleTV hostname on the Options page
 - Google Chrome has to be running while watching video but the actual streaming is done exclusively by AppleTV. There's no need to keep the video page open.
 - Tested with Google Chrome 48 on OSX 10.11 El Capitan and Google Chrome 32 stable on Windows 7 x64.
+
+* The options page accepts not only host name, but also an IP
+address and an optional :port.
+* The protocol used appears to be some ancient AirPlay
+implementation, so just doesn't work with my
+Samsung Q50 Series (32) TV.
+* The Object URLs reported (blob:http://*) are not always
+parseable, still, using the extension as a vehicle for WebSocket
+message passing and other handy testing.
+ 
