@@ -45,14 +45,29 @@ function checkForHtml5Video(document) {
 			if (ret.url) return ret;
 		}
 	}
-
 	return ret;
+}
+
+const socket = new WebSocket("ws://localhost:8765");
+
+async function sendBlob(anchor) {
+  const response = await fetch(anchor.startsWith("blob:") ?
+                                         anchor.href : anchor);
+  const blob = await response.blob();
+  const buffer = await blob.arrayBuffer();
+  socket.send(buffer); // raw binary
 }
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == "Html5Video") {
-		console.log('Request message getHtml5Video received');
+	        var t = checkForHtml5Video();
+		console.log('Request message getHtml5Video received ', t.url, "@", t.position);
+                sendBlob(t.url).then(t => {
+                    console.log("Sent.");
+                });
+
+
         sendResponse({Html5Video: checkForHtml5Video()});
 		return true;
 	}
